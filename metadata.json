@@ -1,0 +1,7 @@
+{
+  "itemDisplayName": "Create Azure Automation Runbook to Trigger Azure AD Sync Scheduler",
+  "description": "This template creates an Azure Automation runbook that can be used on Hybrid Worker Groups to trigger Azure AD Sync Scheduler.",
+  "summary": "This template creates an Azure Automation runbook with a variable and credential asset. ",
+  "githubUsername": "skillriver",
+  "dateUpdated": "2016-04-26"
+}
