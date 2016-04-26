@@ -5,39 +5,45 @@
         "accountName": {
             "type": "string",
             "metadata": {
-                "description": "The name of the Azure Automation account to deploy to."
+                "description": "Specify the name of the Azure Automation account to deploy to."
             }
         },
-        "credentialName": {
+        "AAHybridWorkerCredentialName": {
             "type": "string",
-            "defaultValue": "DefaultAzureCredential",
+            "defaultValue": "AAHybridWorkerSvcAccount",
             "metadata": {
-                "description": "DefaultAzureCredential is the name of the Automation credential used in this runbook. This credential allows you to authenticate to Azure. "
+                "description": "AAHybridWorkerSvcAccount is the name of the Automation credential used in this runbook for the Hybrid Worker. This credential allows you remote to the Azure AD Connect Server. "
             }
         },
-        "userName": {
+        "AAHybridWorkerDomain": {
             "type": "string",
             "metadata": {
-                "description": "The username for the Azure Automation credential."
+                "description": "The domain NETBIOS name for the Azure Automation Hybrid Worker credential."
             }
         },
-        "password": {
+        "AAHybridWorkerUserName": {
+            "type": "string",
+            "metadata": {
+                "description": "The username for the Azure Automation Hybrid Worker credential."
+            }
+        },
+        "AAHybridWorkerPassword": {
             "type": "securestring",
             "metadata": {
-                "description": "The password for the Azure Automation credential."
+                "description": "The password for the Azure Automation Hybrid Worker credential."
             }
         },
-        "jobId": {
+        "AADSServerName": {
             "type": "string",
             "metadata": {
-                "description": "The GUID for the runbook job to be started."
+                "description": "The Servername for the Azure AD Connect Server."
             }
         }
     },
     "variables": {
-        "runbookName": "Get-AzureVMTutorial",
-        "scriptUri": "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-automation-runbook-getvms/Runbooks/Get-AzureVMTutorial.ps1",
-        "runbookDescription": "Authenticates to Azure and lists all the Azure V1 VMs",
+        "runbookName": "Trigger-AzureADSync",
+        "scriptUri": "https://raw.githubusercontent.com/skillriver/Trigger-AzureADSyncScheduler/master/Runbooks/Trigger-AzureADSync.ps1",
+        "runbookDescription": "Runs on Hybrid Worker Group and Connects a Remote PS session to the Azure AD Connect Server to trigger a delta sync",
         "sku": "Free"
     },
     "resources": [
@@ -75,7 +81,7 @@
             }
           },
           {
-            "name": "[parameters('credentialName')]",
+            "name": "[parameters('AAHybridWorkerCredentialName')]",
             "type": "credentials",
             "apiVersion": "2015-01-01-preview",
             "location": "[resourceGroup().location]",
@@ -84,28 +90,23 @@
             ],
             "tags": { },
             "properties": {
-              "userName": "[parameters('userName')]",
-              "password": "[parameters('password')]"
+              "userName": "[concat(parameters('AAHybridWorkerDomain'),'\\', parameters('AAHybridWorkerUserName'))]",
+              "password": "[parameters('AAHybridWorkerPassword')]"
             }
           },
           {
-            "name": "[parameters('jobId')]",
-            "type": "jobs",
+            "name": "[parameters('AADSServerName')]",
+            "type": "variables",
             "apiVersion": "2015-01-01-preview",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-              "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]",
-              "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'), '/runbooks/',variables('runbookName'))]"
+              "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
             ],
-            "tags": {
-              "key": "value"
-            },
+            "tags": { },
             "properties": {
-              "runbook": {
-                "name": "[variables('runbookName')]"
+                "value": "[parameters('AADSServerName')]"
               }
             }
-          }
         ]
       }
     ],
