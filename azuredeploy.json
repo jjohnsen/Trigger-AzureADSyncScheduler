@@ -96,7 +96,7 @@
             }
           },
           {
-            "name": "[parameters('AADSServerName')]",
+            "name": "AADSServerName",
             "type": "variables",
             "apiVersion": "[variables('automationApiVersion')]",
             "location": "[resourceGroup().location]",
