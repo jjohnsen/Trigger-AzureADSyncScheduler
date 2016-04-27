@@ -9,7 +9,7 @@
       "value": "MyAADSServerName"
     },
     "AAHybridWorkerCredentialName": {
-      "value": "DefaultAzureCredential"
+      "value": "AAHybridWorkerSvcAccount"
     },
     "AAHybridWorkerDomain": {
       "value": "MyDOMAIN"

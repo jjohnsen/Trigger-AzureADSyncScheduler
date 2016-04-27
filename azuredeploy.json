@@ -41,6 +41,7 @@
         }
     },
     "variables": {
+        "automationApiVersion": "2015-10-31",
         "runbookName": "Trigger-AzureADSync",
         "scriptUri": "https://raw.githubusercontent.com/skillriver/Trigger-AzureADSyncScheduler/master/Runbooks/Trigger-AzureADSync.ps1",
         "runbookDescription": "Runs on Hybrid Worker Group and Connects a Remote PS session to the Azure AD Connect Server to trigger a delta sync",
@@ -50,7 +51,7 @@
       {
         "name": "[parameters('accountName')]",
         "type": "Microsoft.Automation/automationAccounts",
-        "apiVersion": "2015-01-01-preview",
+        "apiVersion": "[variables('automationApiVersion')]",
         "location": "[resourceGroup().location]",
         "dependsOn": [ ],
         "tags": { },
@@ -63,7 +64,7 @@
           {
             "name": "[variables('runbookName')]",
             "type": "runbooks",
-            "apiVersion": "2015-01-01-preview",
+            "apiVersion": "[variables('automationApiVersion')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
               "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
@@ -83,7 +84,7 @@
           {
             "name": "[parameters('AAHybridWorkerCredentialName')]",
             "type": "credentials",
-            "apiVersion": "2015-01-01-preview",
+            "apiVersion": "[variables('automationApiVersion')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
               "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
@@ -97,14 +98,17 @@
           {
             "name": "[parameters('AADSServerName')]",
             "type": "variables",
-            "apiVersion": "2015-01-01-preview",
+            "apiVersion": "[variables('automationApiVersion')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
               "[concat('Microsoft.Automation/automationAccounts/', parameters('accountName'))]"
             ],
             "tags": { },
             "properties": {
-                "value": "[parameters('AADSServerName')]"
+                "value": "[parameters('AADSServerName')]",
+                "description": "Variable for Azure AD Connect Server Name",
+                "isEncrypted" : 0,
+                "type" : "string"
               }
             }
         ]
