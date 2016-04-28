@@ -34,7 +34,7 @@
             }
         },
         "AADSServerName": {
-            "type": "string",
+            "type": "object",
             "metadata": {
                 "description": "The Servername for the Azure AD Connect Server."
             }
