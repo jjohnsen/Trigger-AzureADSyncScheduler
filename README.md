@@ -1,7 +1,7 @@
 # Trigger-AzureADSyncScheduler
 Azure Automation Runbook work triggering Azure AD Sync Scheduler
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fskillriver%2FTrigger-AzureADSyncScheduler%2Fmaster%2Fazuredeploy.json) 
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https%3A%2F%2Fraw.githubusercontent.com%2Fjjohnsen%2FTrigger-AzureADSyncScheduler%2Fmaster%2Fazuredeploy.json) 
 
 This repository is for Azure Resource Manager and creating an Azure Automation Runbook, as demoed on my blog at http://systemcenterpoint.wordpress.com.
 
